@@ -1,0 +1,21 @@
+name: Debug Build Artifacts
+
+on:
+  workflow_dispatch  # Manually trigger this workflow from GitHub Actions UI
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+          path: dist/
+
+      - name: List Downloaded Files
+        run: ls -la dist
