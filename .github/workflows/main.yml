@@ -3,7 +3,7 @@ name: Deploy Vue 3 App
 on:
   push:
     branches:
-      - main  # Change this to your branch name if different
+      - main  # Change this if using a different branch
 
 jobs:
   build:
@@ -34,7 +34,11 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -44,8 +48,13 @@ jobs:
       - name: Deploy via FTP (cPanel, Shared Hosting)
         uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          server: ${{ secrets.FTP_SERVER}}
+          server: ftp.yourdomain.com
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: dist/
           server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/*
+            **/README.md
