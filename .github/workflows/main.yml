@@ -3,7 +3,7 @@ name: Deploy Vue 3 App
 on:
   push:
     branches:
-      - main  # Change if using a different branch
+      - main  # Change this if using another branch
 
 jobs:
   build:
@@ -25,6 +25,9 @@ jobs:
       - name: Build Project
         run: npm run build
 
+      - name: Debug - List Build Files
+        run: ls -la dist
+
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -40,8 +43,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Create Dist Folder (In Case Download Fails)
-        run: mkdir -p dist
+      - name: Debug - Create Dist Folder
+        run: mkdir -p dist && ls -la
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
@@ -49,10 +52,10 @@ jobs:
           name: dist-files
           path: dist/
 
-      - name: Verify Downloaded Files
+      - name: Debug - List Downloaded Files
         run: ls -la dist
 
-      - name: Deploy via FTP (cPanel, Shared Hosting)
+      - name: Deploy via FTP (cPanel)
         uses: SamKirkland/FTP-Deploy-Action@v4
         with:
           server: ftp.yourdomain.com
