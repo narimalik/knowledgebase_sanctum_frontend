@@ -3,13 +3,13 @@
     <i class="header-toggle d-xl-none bi bi-list"></i>
 
     <div class="profile-img">
-      <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+      <!-- <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle"> -->
     </div>
 
     <a href="index.html" class="logo d-flex align-items-center justify-content-center">
       <!-- Uncomment the line below if you also wish to use an image logo -->
       <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1 class="sitename">Alex Smith</h1>
+      <h1 class="sitename">KnowledgeBase</h1>
     </a>
 
     <div class="social-links text-center">
@@ -22,6 +22,7 @@
 
     <nav id="navmenu" class="navmenu">
       <ul>
+<!--         
         <li><a href="#hero"><i class="bi bi-filetype-php navicon"></i>PHP</a></li>
         <li><a href="#about"><i class="bi bi-database navicon"></i> MySql</a></li>
         <li><a href="#resume"><i class="bi bi-ubuntu  navicon"></i> Linux</a></li>
@@ -37,7 +38,10 @@
 
         <li><a href="#services"><i class="bi bi-database navicon"></i> MySql Workbench</a></li>
         <li><a href="#services"><i class="bi bi-git navicon"></i> GIT</a></li>
-        <li><a href="#services"><i class="bi bi-git navicon"></i> GIT</a></li>
+        <li><a href="#services"><i class="bi bi-git navicon"></i> GIT</a></li> -->
+
+        
+        <li v-for="item in menu " :key=item><RouterLink :to="`/detail/${item.id}`"><i class="bi bi-filetype-php navicon"></i>{{ item.category_name }}</RouterLink></li>
 
 
 
@@ -60,6 +64,9 @@
           </ul>
         </li>
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+
+        
+        <RouterLink to="/about">About</RouterLink>
       </ul>
     </nav>
 
@@ -67,8 +74,30 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name:"LeftMenu"
+    name:"LeftMenu",
+    
+
+    data(){
+        return {
+            menu:{}
+            
+        }
+    },
+    components:{},
+
+    async mounted(){
+      
+        
+         //console.log(axios.defaults.baseURL);
+        await axios.get('/categories')
+        .then(res => {          
+            this.menu=res.data.data
+        } )
+      
+    },
 }
 </script>
 
