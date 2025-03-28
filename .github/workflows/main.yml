@@ -23,9 +23,11 @@ jobs:
         run: npm install
 
       - name: Build Project
-        run: npm run build
+        run: |
+          npm run build
+          mkdir -p dist  # Force-create dist folder if missing
 
-      - name: Debug - List Build Files
+      - name: Debug - List Build Output
         run: ls -la dist
 
       - name: Upload Build Artifacts
@@ -43,7 +45,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Debug - Create Dist Folder
+      - name: Debug - Ensure Dist Folder Exists
         run: mkdir -p dist && ls -la
 
       - name: Download Build Artifacts
@@ -58,7 +60,7 @@ jobs:
       - name: Deploy via FTP (cPanel)
         uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          server: ftp.yourdomain.com
+          server: ${{ secrets.FTP_SERVER}}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: dist/
