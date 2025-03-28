@@ -49,10 +49,13 @@ jobs:
         run: mkdir -p dist && ls -la
 
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v3
         with:
           name: dist-files
           path: dist/
+          
+      - name: Clear GitHub Cache
+        run: actions/cache@v4
 
       - name: Debug - List Downloaded Files
         run: ls -la dist
