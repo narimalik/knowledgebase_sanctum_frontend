@@ -55,7 +55,7 @@ jobs:
         run: actions/cache@v4
 
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3.1.1
         with:
           name: dist-files
           path: dist/
