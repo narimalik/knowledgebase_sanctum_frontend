@@ -54,6 +54,9 @@ jobs:
       - name: Clear GitHub Cache
         run: actions/cache@v4
 
+      - name: Debug Env
+        run: env
+
       - name: Download Build Artifacts
         uses: actions/download-artifact@v3.1.1
         with:
