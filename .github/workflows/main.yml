@@ -53,7 +53,10 @@ jobs:
         with:
           name: dist-files
           path: dist/
-          
+
+      - name: Test Networ connectvity
+        run:  curl https:github.com
+
       - name: Clear GitHub Cache
         run: actions/cache@v4
 
